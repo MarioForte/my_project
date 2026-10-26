@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница - TechShop{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 text-center mb-5">
+        <h1 class="display-4">Добро пожаловать в TechShop!</h1>
+        <p class="lead">Лучший выбор электроники по доступным ценам</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">Начать покупки</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <h3>Смартфоны</h3>
+                <p>Новейшие модели от ведущих брендов</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <h3>Ноутбуки</h3>
+                <p>Мощные устройства для работы и развлечений</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <h3>Аксессуары</h3>
+                <p>Все необходимое для ваших устройств</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Популярные товары -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h2>Популярные товары</h2>
+        <div class="row">
+            {% for product in popular_products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card product-card">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <span class="text-muted">Нет изображения</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-muted">{{ product.category.name }}</p>
+                        <p class="card-text">
+                            <strong class="text-primary">{{ product.price }} руб.</strong>
+                        </p>
+                        <a href="#" class="btn btn-outline-primary w-100">В корзину</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted">Товары пока не добавлены</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

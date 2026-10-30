@@ -47,7 +47,24 @@
                 </div>
             </div>
             <div class="navbar-nav">
-                <a href="/admin/" class="nav-link">Админ-панель</a>
+                {% if user.is_authenticated %}
+                <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                        Привет, {{ user.first_name|default:user.username }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'profile' %}" class="dropdown-item">Мой профиль</a></li>
+                        <li><a href="#" class="dropdown-item">Корзина</a></li>
+                        {% if user.is_staff %}
+                        <li><a href="/admin/" class="dropdown-item">Админ-панель</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'logout' %}" class="dropdown-item">Выход</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Войти</a>
+                <a href="{% url 'register' %}" class="nav-link">Зарегистрироваться</a>
+                {% endif %}
             </div>
         </div>
     </nav>

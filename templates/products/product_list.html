@@ -50,7 +50,10 @@
                         <strong class="text-primary">{{ product.price }} руб.</strong>
                     </p>
                     <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-primary">В корзину</a>
+                        <form method="post" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">В корзину</button>
+                        </form>
                         <a href="{% url 'category_products' product.category.id %}" class="btn btn-outline-secondary btn-sm">
                             Все {{ product.category.name }}
                         </a>

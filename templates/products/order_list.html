@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои заказы - TechShop{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>Мои заказы</h1>
+        
+        {% if not orders %}
+        <div class="alert alert-info">
+            <h4>У вас пока нет заказов</h4>
+            <p>Совершите свою первую покупку в нашем магазине!</p>
+            <a href="{% url 'product_list' %}" class="btn btn-primary">Перейти к товарам</a>
+        </div>
+        {% else %}
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Номер заказа</th>
+                        <th>Дата</th>
+                        <th>Статус</th>
+                        <th>Сумма</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>
+                            <strong>#{{ order.id }}</strong>
+                        </td>
+                        <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if order.status == 'delivered' %}bg-success
+                                {% elif order.status == 'cancelled' %}bg-danger
+                                {% elif order.status == 'processing' %}bg-warning
+                                {% else %}bg-secondary{% endif %}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <strong>{{ order.total_price }} руб.</strong>
+                        </td>
+                        <td>
+                            <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-outline-primary">
+                                Подробнее
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

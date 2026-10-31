@@ -54,7 +54,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'profile' %}" class="dropdown-item">Мой профиль</a></li>
-                        <li><a href="#" class="dropdown-item">Корзина</a></li>
+                        <li><a href="{% url 'cart_detail' %}" class="dropdown-item">Корзина 
+                            <span class="badge bg-primary cart-counter">{{ cart_total_quantity }}</span>
+                        </a></li>
                         {% if user.is_staff %}
                         <li><a href="/admin/" class="dropdown-item">Админ-панель</a></li>
                         {% endif %}

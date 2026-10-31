@@ -64,4 +64,3 @@ class LoginForm(forms.Form):
             "placeholder": "Пароль"
         })
     )
-    # https://clck.ru/3WmrwL
